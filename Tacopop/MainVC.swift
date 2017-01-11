@@ -17,11 +17,14 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
 		self.headerView.addDropShadow()
-		self.registerCell()
+		collectionView.delegate = self
+		collectionView.dataSource = self
+		ds.delegate = self
 		ds.laodTacoData()
-
+        collectionView.register(TacoCell.self)
     }
 
+	
 
 	func tacoDataLoaded() {
 		print("data loaded")
@@ -45,6 +48,12 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
 		return cell
 	}
 
+
+ func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+	if let cell = collectionView.cellForItem(at: indexPath) as? TacoCell {
+		cell.shake()
+	}
+	}
 
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
